@@ -28,7 +28,7 @@ module.exports = class BankController{
 
     static async getAllBanks(req,res){
         try{
-            let {valorPedido, numParcelas} = req.body
+            let {valorPedido, numParcelas} = req.query
             valorPedido = parseFloat(valorPedido)
             numParcelas = parseFloat(numParcelas)
 
@@ -37,11 +37,12 @@ module.exports = class BankController{
             if(!banks) return res.status(404).json({message: "No bank found"})
 
             async function processBank(bank) {
-                const valorComJuros = await calcJuros(valorPedido, bank.anual_int, numParcelas).toFixed(2)
-                const valorMensal = (valorComJuros / numParcelas).toFixed(2)
-              
-                bank.finalValue = valorComJuros
-                bank.mensalValue = valorMensal
+                const valorComJuros = await calcJuros(valorPedido, bank.anual_int, numParcelas).toFixed(2);
+                const valorMensal = (valorComJuros / numParcelas).toFixed(2);
+
+                bank.finalValue = parseFloat(valorComJuros);
+                bank.mensalValue = parseFloat(valorMensal);
+
               
                 await bank.save()
             }
