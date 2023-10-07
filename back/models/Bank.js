@@ -12,7 +12,9 @@ const bankSchema = new mongoose.Schema({
     max_install: {
         type: Number,
         required: true
-    }
+    },
+    finalValue: Number,
+    mensalValue: Number
 });
 
 const Bank = mongoose.model('Bank', bankSchema);
