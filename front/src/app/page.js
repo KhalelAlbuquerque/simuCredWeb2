@@ -4,6 +4,7 @@ import finance from './finance.png'
 import { useState } from 'react'
 import carro from './carro.png'
 import iconefinance from './iconefinance.png'
+import { MdOutlineKeyboardArrowRight } from 'react-icons/md'
 
 export default function Home() {
 
@@ -31,6 +32,11 @@ export default function Home() {
 
   return (
     <div className='flex justify-around w-full h-screen items-center max-[1220px]:bg-green-100'>
+      <div className='max-[1220px]:hidden fixed justify-center items-center border-l-2 rounded-full p-6'>
+        <div className='bg-white w-16 py-3 rounded-full shadow-2xl'>
+          <MdOutlineKeyboardArrowRight className='mx-auto text-gray-600 text-4xl' />
+        </div>
+      </div>
       <div className='w-1/2 max-[1220px]:hidden'>
         <header className='flex flex-col justify-center items-center'>
           <div className='text-start w-80'>
