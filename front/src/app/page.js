@@ -105,9 +105,9 @@ export default function Home() {
             placeholder='Valor'
             value={value}
             onChange={({ target }) => setValue((target.value))}
-            className='border border-gray-300 w-80 h-10 mt-12 px-4 rounded-md'
+            className='border border-gray-300 w-96 h-10 mt-12 px-4 rounded-md max-[420px]:w-80'
             />
-            <select value={bank} onChange={({ target }) => setBank(target.value)} className='w-80 py-2 px-3 border border-gray-300 rounded-md text-gray-500'>
+            <select value={bank} onChange={({ target }) => setBank(target.value)} className='w-96 max-[420px]:w-80 py-2 px-3 border border-gray-300 rounded-md text-gray-500'>
               <option value="" disabled>
                 Escolha um banco
               </option>
@@ -122,7 +122,7 @@ export default function Home() {
               <option className='text-black' value="nubank">Nubank</option>
               <option className='text-black' value="picpay">Picpay</option>
             </select>
-            <select value={months} onChange={({ target }) => setMonths(Number(target.value))} className='w-80 py-2 px-3 border border-gray-300 rounded-md text-gray-500'>
+            <select value={months} onChange={({ target }) => setMonths(Number(target.value))} className='w-96 max-[420px]:w-80 py-2 px-3 border border-gray-300 rounded-md text-gray-500'>
               <option value="" disabled>
                 Quantos meses?
               </option>
@@ -133,7 +133,7 @@ export default function Home() {
               <option className='text-black' value="60">60</option>
               <option className='text-black' value="72">72</option>
             </select>
-            <button onClick={handleSubmit} type='submit' className='bg-green-400 text-white font-smibold w-80 h-10 rounded-md'>
+            <button onClick={handleSubmit} type='submit' className='bg-green-400 text-white font-smibold w-96 h-10 rounded-md max-[420px]:w-80'>
               Simular financiamento
             </button>
           </form>
