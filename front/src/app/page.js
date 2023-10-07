@@ -69,7 +69,7 @@ export default function Home() {
         </header>
       </div>
       <div className='w-1/2 bg-green-100 h-screen flex flex-col justify-center items-center'>
-        <header className='flex flex-col items-center justify-center min-[1220px]:items-start min-[1220px]:w-80'>
+        <header className='flex flex-col items-center justify-center min-[1220px]:items-start min-[1220px]:w-96'>
           <div>
             <Image
             src={finance}
@@ -93,7 +93,7 @@ export default function Home() {
             <h1 className='text-4xl font-semibold text-green-300 max-[1220px]:flex hidden'>
               financiamento<span className='text- text-gray-600'>.</span>
             </h1>
-            <p className='w-80 max-[1220px]:text-center max-[1220px]:w-54 text-gray-400 mt-4'>
+            <p className='w-96 max-[1220px]:text-center max-[1220px]:w-54 text-gray-400 mt-4'>
               Preencha os campos e simule o seu financiamento.
             </p>
           </div>
