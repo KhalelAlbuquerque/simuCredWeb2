@@ -4,9 +4,25 @@ import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react';
 
 export default function Emprestimo() {
-    const router = useRouter()
+    const router = useRouter();
+    const { valorPedido, numParcelas } = router.query;
 
-    const url = `http://localhost:3001/?valorPedido=${10000}&numParcelas=${24}`;
+    // Defina estados locais para os valores
+    const [valorPedidoLocal, setValorPedidoLocal] = useState('');
+    const [numParcelasLocal, setNumParcelasLocal] = useState('');
+  
+    // Atualize os estados locais quando os valores dos parâmetros de consulta mudarem
+    useEffect(() => {
+      if (valorPedido) {
+        setValorPedidoLocal(valorPedido);
+      }
+      if (numParcelas) {
+        setNumParcelasLocal(numParcelas);
+      }
+    }, [valorPedido, numParcelas]);
+
+    // 100% CERTO!!!! NAO MUDE KHALEL!!!!! (ROTA DO BACK END)
+    const url = `http://localhost:3001/?valorPedido=${valorPedidoLocal}&numParcelas=${numParcelasLocal}`;
 
     const [banks, setBanks] = useState([]);
 
@@ -15,7 +31,7 @@ export default function Emprestimo() {
             .then(response => response.json())
             .then(data => setBanks(data.success))
             .catch(error => console.error(error))
-    }, [])
+    }, [valorPedido, numParcelas])
 
     function redirect(id){
         router.push(`/banco/${id}`)

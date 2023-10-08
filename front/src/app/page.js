@@ -2,7 +2,7 @@
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import finance from './finance.png'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import carro from './carro.png'
 import iconefinance from './iconefinance.png'
 import { MdOutlineKeyboardArrowRight } from 'react-icons/md'
@@ -13,8 +13,15 @@ export default function Home() {
   const [months,setMonths] = useState('')
   const [value, setValue] = useState('')
 
-  function handleSubmit(e) {
+
+  async function handleSubmit(e) {
     e.preventDefault()
+
+    await fetch("http://localhost:3001/clear")
+    .then(e=>{
+      console.log('Limpado')
+    })
+
     const valor = Number(value)
     if (valor <= 0 || isNaN(valor)) {
       setValue('0')
@@ -25,7 +32,8 @@ export default function Home() {
       return alert("Preencha todos os campos ")
     }
 
-    router.push('/emprestimo')
+    router.push(`http://localhost:3000/emprestimo?valorPedido=${value}&numParcelas=${months}`)
+
     setMonths('')
     setValue('')
   }
@@ -104,7 +112,9 @@ export default function Home() {
             type='number'
             placeholder='Valor'
             value={value}
-            onChange={({ target }) => setValue((target.value))}
+            onChange={({ target }) =>{
+              setValue((target.value))
+            }}
             className='border border-gray-300 w-96 h-10 mt-12 px-4 rounded-md max-[420px]:w-80'
             />
             <select value={months} onChange={({ target }) => setMonths(target.value)} className='w-96 max-[420px]:w-80 py-2 px-3 border border-gray-300 rounded-md text-gray-500'>
@@ -118,7 +128,7 @@ export default function Home() {
               <option className='text-black' value="60">60</option>
               <option className='text-black' value="72">72</option>
             </select>
-            <button onClick={handleSubmit} style={{fontWeight:'bold'}} type='submit' className='bg-green-400 text-white font-smibold w-96 h-10 rounded-md max-[420px]:w-80'>
+            <button onClick={()=>handleSubmit} style={{fontWeight:'bold'}} type='submit' className='bg-green-400 text-white font-smibold w-96 h-10 rounded-md max-[420px]:w-80'>
               Simular financiamento
             </button>
           </form>
