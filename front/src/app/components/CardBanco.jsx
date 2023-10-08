@@ -5,7 +5,7 @@ import Link from 'next/link'
 
 export default function CardBanco({nomeBanco, valorParcela, valorTotal}){ 
     return (
-        <Link href="https://google.com">
+        <div>
             <div className='flex mx-auto w-[360px] bg-green-200 border-2 border-zinc-300 rounded-md  shadow-2xl'>
                 <div>
                     <Image
@@ -34,6 +34,6 @@ export default function CardBanco({nomeBanco, valorParcela, valorTotal}){
                 </div>
                 <RiArrowRightDoubleFill className='relative right-0 mt-1 text-gray-600 text-xl'/>
             </div>
-        </Link>
+        </div>
     )
 }

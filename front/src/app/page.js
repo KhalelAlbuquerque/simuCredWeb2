@@ -1,5 +1,6 @@
 'use client'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 import finance from './finance.png'
 import { useState } from 'react'
 import carro from './carro.png'
@@ -7,27 +8,26 @@ import iconefinance from './iconefinance.png'
 import { MdOutlineKeyboardArrowRight } from 'react-icons/md'
 
 export default function Home() {
+  const router = useRouter()
 
-
-  const [bank,setBank] = useState('')
   const [months,setMonths] = useState('')
   const [value, setValue] = useState('')
 
   function handleSubmit(e) {
     e.preventDefault()
     const valor = Number(value)
-
-    if (valor <= 0) {
+    if (valor <= 0 || isNaN(valor)) {
+      setValue('0')
       return alert("Valor inválido")
     }
 
-    if (!bank || !months) {
+    if (!months) {
       return alert("Preencha todos os campos ")
     }
 
+    router.push('/emprestimo')
     setMonths('')
     setValue('')
-    setBank('')
   }
 
   return (
@@ -107,22 +107,7 @@ export default function Home() {
             onChange={({ target }) => setValue((target.value))}
             className='border border-gray-300 w-96 h-10 mt-12 px-4 rounded-md max-[420px]:w-80'
             />
-            <select value={bank} onChange={({ target }) => setBank(target.value)} className='w-96 max-[420px]:w-80 py-2 px-3 border border-gray-300 rounded-md text-gray-500'>
-              <option value="" disabled>
-                Escolha um banco
-              </option>
-              <option className='text-black' value="banco do brasil">Banco do Brasil</option>
-              <option className='text-black' value="caixa econômica federal">Caixa econômica Federal</option>
-              <option className='text-black' value="bradesco">Bradesco</option>
-              <option className='text-black' value="itau">Itáu</option>
-              <option className='text-black' value="santander">Santander</option>
-              <option className='text-black' value="sicoob">Sicoob</option>
-              <option className='text-black' value="inter">Inter</option>
-              <option className='text-black' value="original">Original</option>
-              <option className='text-black' value="nubank">Nubank</option>
-              <option className='text-black' value="picpay">Picpay</option>
-            </select>
-            <select value={months} onChange={({ target }) => setMonths(Number(target.value))} className='w-96 max-[420px]:w-80 py-2 px-3 border border-gray-300 rounded-md text-gray-500'>
+            <select value={months} onChange={({ target }) => setMonths(target.value)} className='w-96 max-[420px]:w-80 py-2 px-3 border border-gray-300 rounded-md text-gray-500'>
               <option value="" disabled>
                 Quantos meses?
               </option>
@@ -133,7 +118,7 @@ export default function Home() {
               <option className='text-black' value="60">60</option>
               <option className='text-black' value="72">72</option>
             </select>
-            <button onClick={handleSubmit} type='submit' className='bg-green-400 text-white font-smibold w-96 h-10 rounded-md max-[420px]:w-80'>
+            <button onClick={handleSubmit} style={{fontWeight:'bold'}} type='submit' className='bg-green-400 text-white font-smibold w-96 h-10 rounded-md max-[420px]:w-80'>
               Simular financiamento
             </button>
           </form>
