@@ -7,11 +7,9 @@ export default function Emprestimo() {
     const router = useRouter();
     const { valorPedido, numParcelas } = router.query;
 
-    // Defina estados locais para os valores
     const [valorPedidoLocal, setValorPedidoLocal] = useState('');
     const [numParcelasLocal, setNumParcelasLocal] = useState('');
-  
-    // Atualize os estados locais quando os valores dos parâmetros de consulta mudarem
+    
     useEffect(() => {
       if (valorPedido) {
         setValorPedidoLocal(valorPedido);
@@ -21,7 +19,7 @@ export default function Emprestimo() {
       }
     }, [valorPedido, numParcelas]);
 
-    // 100% CERTO!!!! NAO MUDE KHALEL!!!!! (ROTA DO BACK END)
+    // 100% CERTO!!!! NAO MUDE KHALEL!!!!! (ROTA DO BACK END) ~~ Josue: KKKKKKKKKKKKKKKKKKKKKKKKKKKKK NAO ESQUEÇA KHALEL
     const url = `http://localhost:3001/?valorPedido=${valorPedidoLocal}&numParcelas=${numParcelasLocal}`;
 
     const [banks, setBanks] = useState([]);
