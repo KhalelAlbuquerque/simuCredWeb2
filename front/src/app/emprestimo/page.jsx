@@ -1,40 +1,33 @@
-'use client'
+"use client"
 import CardBanco from '../components/CardBanco';
-import { useRouter } from 'next/navigation'
-import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import React, { useEffect, useState } from 'react';
 
-export default function Emprestimo() {
+export default function Emprestimo(props) {
     const router = useRouter();
-    const { valorPedido, numParcelas } = router.query;
 
-    // Defina estados locais para os valores
-    const [valorPedidoLocal, setValorPedidoLocal] = useState('');
-    const [numParcelasLocal, setNumParcelasLocal] = useState('');
-  
-    // Atualize os estados locais quando os valores dos parâmetros de consulta mudarem
-    useEffect(() => {
-      if (valorPedido) {
-        setValorPedidoLocal(valorPedido);
-      }
-      if (numParcelas) {
-        setNumParcelasLocal(numParcelas);
-      }
-    }, [valorPedido, numParcelas]);
+    let valorPedido = props.searchParams.valorPedido;
+    let numParcelas = props.searchParams.numParcelas;
 
     // 100% CERTO!!!! NAO MUDE KHALEL!!!!! (ROTA DO BACK END)
-    const url = `http://localhost:3001/?valorPedido=${valorPedidoLocal}&numParcelas=${numParcelasLocal}`;
+    const url = `http://localhost:3001/?valorPedido=${valorPedido}&numParcelas=${numParcelas}`;
 
+    // Usar useState para armazenar os dados buscados
     const [banks, setBanks] = useState([]);
 
     useEffect(() => {
         fetch(url)
             .then(response => response.json())
-            .then(data => setBanks(data.success))
-            .catch(error => console.error(error))
-    }, [valorPedido, numParcelas])
+            .then(data => {
+                setBanks(data.success);
+            })
+            .catch(error => {
+                console.error('Erro ao buscar dados:', error);
+            });
+    }, []);
 
-    function redirect(id){
-        router.push(`/banco/${id}`)
+    function redirect(id) {
+        router.push(`/banco/${id}`);
     }
 
     return (
@@ -45,7 +38,7 @@ export default function Emprestimo() {
             <div className='flex flex-col pt-8 mb-8 gap-6'>
                 {banks.length > 0 ? (
                     banks.map((banco, index) => (
-                        <div key={index} onClick={()=>redirect(banco._id)}>
+                        <div key={index} onClick={() => redirect(banco._id)}>
                             <CardBanco
                                 nomeBanco={banco.name}
                                 valorParcela={banco.mensalValue}
@@ -54,7 +47,7 @@ export default function Emprestimo() {
                         </div>
                     ))
                 ) : (
-                    <span style={{textAlign:"center", fontWeight:'bold'}}>CARREGANDO...</span>
+                    <span style={{ textAlign: "center", fontWeight: 'bold' }}>CARREGANDO...</span>
                 )}
             </div>
         </div>

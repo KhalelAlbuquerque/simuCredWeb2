@@ -1,26 +1,24 @@
-import { useRouter } from 'next/router'; // Importe useRouter
+import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import finance from './img/finance.png';
-import cifrao from './img/cifrao.png';
-import carromulher from './img/mulhercarro.png';
-import { useEffect, useState } from 'react';
+import finance from '../img/finance.png';
+import cifrao from '../img/cifrao.png';
+import carromulher from '../img/mulhercarro.png';
 
-export default function Banco() {
-  const router = useRouter(); 
-  const { id } = router.query; 
+export default async function Banco(props) {
+  const id = props.params.id
 
-  const [banco, setBanco] = useState(null);
+  let banco
 
   const url = `http://localhost:3001/${id}`;
 
-  useEffect(() => {
     if (id) { 
-      fetch(url, { method: 'GET' })
+        await fetch(url, { method: 'GET', cache:'reload' }) 
         .then(response => response.json())
-        .then(data => setBanco(data.success))
+        .then(data => {
+            banco = data.success
+        })
         .catch(error => console.error(error));
     }
-  }, [id]);
 
 
     return (

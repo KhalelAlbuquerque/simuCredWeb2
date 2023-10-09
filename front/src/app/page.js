@@ -8,6 +8,10 @@ import iconefinance from './iconefinance.png'
 import { MdOutlineKeyboardArrowRight } from 'react-icons/md'
 
 export default function Home() {
+  useEffect(()=>{
+
+  })
+
   const router = useRouter()
 
   const [months,setMonths] = useState('')
@@ -31,8 +35,9 @@ export default function Home() {
     if (!months) {
       return alert("Preencha todos os campos ")
     }
+    
+    router.push(`/emprestimo?valorPedido=${value}&numParcelas=${months}`);
 
-    router.push(`http://localhost:3000/emprestimo?valorPedido=${value}&numParcelas=${months}`)
 
     setMonths('')
     setValue('')
