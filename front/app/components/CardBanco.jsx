@@ -1,7 +1,6 @@
 import banco from './banco.webp'
 import Image from 'next/image'
 import { RiArrowRightDoubleFill } from 'react-icons/ri'
-import Link from 'next/link'
 
 export default function CardBanco({nomeBanco, valorParcela, valorTotal}){ 
     return (
