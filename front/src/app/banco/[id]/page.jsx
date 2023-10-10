@@ -1,4 +1,5 @@
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import Image from 'next/image';
 import finance from '../img/finance.png';
 import cifrao from '../img/cifrao.png';
@@ -6,6 +7,8 @@ import carromulher from '../img/mulhercarro.png';
 
 export default async function Banco(props) {
   const id = props.params.id
+  const finalValue = parseFloat(props.searchParams.valorFinal)
+  const numParcelas = parseFloat(props.searchParams.numParcelas)
 
   let banco
 
@@ -16,6 +19,8 @@ export default async function Banco(props) {
         .then(response => response.json())
         .then(data => {
             banco = data.success
+
+            banco.mensalValue = (finalValue/numParcelas).toFixed(2)
         })
         .catch(error => console.error(error));
     }
@@ -49,15 +54,17 @@ export default async function Banco(props) {
                         </div>
                         <div className="flex flex-col items-center w-80 mx-auto pt-8 gap-2 min-[1220px]:gap-4 min-[1220px]:w-60 min-[1220px]:items-start">
                             <h1 className="text-sm text-gray-500 min-[1220px]:text-xl">Valor total a pagar:</h1>
-                            <h1 className="text-gray-700 text-3xl font-bold min-[1220px]:text-4xl">R$ {banco.finalValue}</h1>
+                            <h1 className="text-gray-700 text-3xl font-bold min-[1220px]:text-4xl">R$ {finalValue}</h1>
                         </div>
                         <p className="text-gray-500 mt-6 min-[1220px]:w-60 min-[1220px]:flex-start italic">
-                            * Financiamento em 48 meses
+                            * Financiamento em {numParcelas} meses
                         </p>
                         <div>
-                            <button className="border-2 hover:bg-green-600 hover:text-white text-gray-500 py-2 px-4 rounded-md mt-8 w-72 min-[1220px]:w-64">
-                                Voltar ao simulador
-                            </button>
+                            <Link href={`/emprestimo?valorPedido=${finalValue}&numParcelas=${numParcelas}`}>
+                                <button className="border-2 hover:bg-green-600 hover:text-white text-gray-500 py-2 px-4 rounded-md mt-8 w-72 min-[1220px]:w-64">
+                                    Voltar ao simulador
+                                </button>
+                            </Link>
                         </div>
                     </div>
                     <div>

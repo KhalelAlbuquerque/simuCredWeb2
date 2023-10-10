@@ -6,8 +6,15 @@ import React, { useEffect, useState } from 'react';
 export default function Emprestimo(props) {
     const router = useRouter();
 
-    let valorPedido = props.searchParams.valorPedido;
-    let numParcelas = props.searchParams.numParcelas;
+    function calcJuros(valorEntrada, anualTax, months) {
+        const txJur = anualTax / 100 / 12; 
+        const total = valorEntrada * Math.pow(1 + txJur, months);
+        return total.toFixed(2); 
+    }
+    
+
+    let valorPedido = parseFloat(props.searchParams.valorPedido);
+    let numParcelas = parseFloat(props.searchParams.numParcelas);
 
     // 100% CERTO!!!! NAO MUDE KHALEL!!!!! (ROTA DO BACK END)
     const url = `http://localhost:3001/?valorPedido=${valorPedido}&numParcelas=${numParcelas}`;
@@ -17,7 +24,19 @@ export default function Emprestimo(props) {
     useEffect(() => {
         fetch(url)
             .then(response => response.json())
-            .then(data => {
+            .then((data) => {
+
+                data.success.forEach(bank=>{
+                    if(bank.max_install<numParcelas) {
+                        bank.mensalValue='Recusado'
+                        bank.finalValue = 'Recusado'
+                    }else{
+                        const juros = calcJuros(valorPedido, bank.anual_int, numParcelas)
+                        const parcelas = (juros/    numParcelas).toFixed(2)
+                        bank.mensalValue = `R$ ${parcelas}`
+                        bank.finalValue =  `R$ ${juros}`
+                    }
+                })
                 setBanks(data.success);
             })
             .catch(error => {
@@ -25,8 +44,9 @@ export default function Emprestimo(props) {
             });
     }, []);
 
-    function redirect(id) {
-        router.push(`/banco/${id}`);
+    function redirect(id, final, vezes) {
+        final = final.split(' ')[1]
+        router.push(`/banco/${id}?valorFinal=${final}&numParcelas=${vezes}`);
     }
 
     return (
@@ -37,7 +57,7 @@ export default function Emprestimo(props) {
             <div className='flex flex-col pt-8 mb-8 gap-6'>
                 {banks.length > 0 ? (
                     banks.map((banco, index) => (
-                        <div key={index} onClick={() => redirect(banco._id)}>
+                        <div key={index} onClick={() => redirect(banco._id, banco.finalValue, numParcelas)}>
                             <CardBanco
                                 nomeBanco={banco.name}
                                 valorParcela={banco.mensalValue}

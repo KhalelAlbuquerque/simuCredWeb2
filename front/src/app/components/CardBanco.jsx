@@ -22,12 +22,12 @@ export default function CardBanco({nomeBanco, valorParcela, valorTotal}){
                     <div className='flex gap-4 '>
                         <div>
                             <h1 className='font-semibold'>Valor Parcela:</h1>
-                            <p className='text-gray-500 font-semibold'>R$ {valorParcela}</p>
+                            <p className='text-gray-500 font-semibold'>{valorParcela}</p>
 
                         </div>
                         <div>
                             <h1 className='font-semibold'>Valor total:</h1>
-                            <p className='text-gray-500 font-semibold'>R$ {valorTotal}</p>
+                            <p className='text-gray-500 font-semibold'>{valorTotal}</p>
                         </div>
                     </div>
                 </div>
