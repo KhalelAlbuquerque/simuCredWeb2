@@ -6,7 +6,9 @@ import cifrao from '../img/cifrao.png';
 import carromulher from '../img/mulhercarro.png';
 
 export default async function Banco(props) {
-  const id = props.params.id
+  const id = props.params.param[0]
+  const firstValue = props.params.param[1]
+
   const finalValue = parseFloat(props.searchParams.valorFinal)
   const numParcelas = parseFloat(props.searchParams.numParcelas)
 
@@ -60,7 +62,7 @@ export default async function Banco(props) {
                             * Financiamento em {numParcelas} meses
                         </p>
                         <div>
-                            <Link href={`/emprestimo?valorPedido=${finalValue}&numParcelas=${numParcelas}`}>
+                            <Link href={`/emprestimo?valorPedido=${firstValue}&numParcelas=${numParcelas}`}>
                                 <button className="border-2 hover:bg-green-600 hover:text-white text-gray-500 py-2 px-4 rounded-md mt-8 w-72 min-[1220px]:w-64">
                                     Voltar ao simulador
                                 </button>

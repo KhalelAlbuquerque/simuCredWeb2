@@ -46,7 +46,7 @@ export default function Emprestimo(props) {
 
     function redirect(id, final, vezes) {
         final = final.split(' ')[1]
-        router.push(`/banco/${id}?valorFinal=${final}&numParcelas=${vezes}`);
+        router.push(`/banco/${id}/${valorPedido}?valorFinal=${final}&numParcelas=${vezes}`);
     }
 
     return (
