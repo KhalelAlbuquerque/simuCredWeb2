@@ -57,12 +57,24 @@ export default function Emprestimo(props) {
             <div className='flex flex-col pt-8 mb-8 gap-6'>
                 {banks.length > 0 ? (
                     banks.map((banco, index) => (
-                        <div key={index} onClick={() => redirect(banco._id, banco.finalValue, numParcelas)}>
-                            <CardBanco
-                                nomeBanco={banco.name}
-                                valorParcela={banco.mensalValue}
-                                valorTotal={banco.finalValue}
-                            />
+                        <div key={index}>
+                            {banco.mensalValue === 'Recusado' ? (
+                                <CardBanco
+                                    nomeBanco={banco.name}
+                                    valorParcela={banco.mensalValue}
+                                    valorTotal={banco.finalValue}
+                                    disabled={true}
+                                />
+                            ) : (
+                                <CardBanco
+                                    nomeBanco={banco.name}
+                                    valorParcela={banco.mensalValue}
+                                    valorTotal={banco.finalValue}
+                                    disabled={false}
+                                    onClick={() => redirect(banco._id, banco.finalValue, numParcelas)}
+                                />
+                            )
+                }
                         </div>
                     ))
                 ) : (
