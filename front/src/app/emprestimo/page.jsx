@@ -3,7 +3,7 @@ import CardBanco from '../components/CardBanco';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 
-export default function Emprestimo(props) {
+export default function Emprestimo({searchParams}) {
     const router = useRouter();
 
     function calcJuros(valorEntrada, anualTax, months) {
@@ -13,8 +13,8 @@ export default function Emprestimo(props) {
     }
     
 
-    let valorPedido = parseFloat(props.searchParams.valorPedido);
-    let numParcelas = parseFloat(props.searchParams.numParcelas);
+    let valorPedido = parseFloat(searchParams.valorPedido);
+    let numParcelas = parseFloat(searchParams.numParcelas);
 
     // 100% CERTO!!!! NAO MUDE KHALEL!!!!! (ROTA DO BACK END)
     const url = `http://localhost:3001/?valorPedido=${valorPedido}&numParcelas=${numParcelas}`;
@@ -54,7 +54,7 @@ export default function Emprestimo(props) {
             <div>
                 <h1 className='text-2xl text-center font-bold text-gray-700 pt-8'>Escolha um banco</h1>
             </div>
-            <div className='flex flex-col pt-8 mb-8 gap-6'>
+            <div className='flex justify-center items-start flex-wrap pt-8 mb-8 gap-6'>
                 {banks.length > 0 ? (
                     banks.map((banco, index) => (
                         <div key={index}>

@@ -5,12 +5,12 @@ import finance from '../img/finance.png';
 import cifrao from '../img/cifrao.png';
 import carromulher from '../img/mulhercarro.png';
 
-export default async function Banco(props) {
-  const id = props.params.param[0]
-  const firstValue = props.params.param[1]
+export default async function Banco({params, searchParams}) {
+  const id = params.param[0]
+  const firstValue = params.param[1]
 
-  const finalValue = parseFloat(props.searchParams.valorFinal)
-  const numParcelas = parseFloat(props.searchParams.numParcelas)
+  const finalValue = parseFloat(searchParams.valorFinal)
+  const numParcelas = parseFloat(searchParams.numParcelas)
 
   let banco
 
